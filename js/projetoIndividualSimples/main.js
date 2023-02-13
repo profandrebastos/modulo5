@@ -17,7 +17,5 @@ if(i == 1){
 } else {
   collection.pop();
 }
-
-const collectionJSON = JSON.stringify(collection.sort());
-const listJSON = JSON.parse(collectionJSON);
-console.log(listJSON);
+collection.sort();
+console.log(collection);
