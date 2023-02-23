@@ -1,5 +1,5 @@
-import usuarioDAO from '../DAO/usuarioDAO.js';
-import Usuario from '../models/usuario.js';
+import UsuarioDAO from '../DAO/UsuarioDAO.js';
+import Usuario from '../models/Usuario.js';
 
 class usuarioController {
     static rotas(app){
@@ -12,7 +12,7 @@ class usuarioController {
     }
 
     static async listar(req, res){
-        const usuarios = await usuarioDAO.listar()
+        const usuarios = await UsuarioDAO.listar()
         // Devolve a lista de usuarios
         res.send(usuarios)
     }
@@ -25,7 +25,7 @@ class usuarioController {
             senha: req.body.senha
         }
         // Adiciona o usuario no BD
-        const result = await usuarioDAO.inserir(usuario)                        
+        const result = await UsuarioDAO.inserir(usuario)                        
         // Verifica se o usuario foi inserido
         if(result.erro){
             res.status(500).send(result)
@@ -36,7 +36,7 @@ class usuarioController {
 
     static async buscarPorEmail(req, res){
         // Busca o email na lista de usuarios
-        const usuario = await usuarioDAO.buscarPorEmail(req.params.email)
+        const usuario = await UsuarioDAO.buscarPorEmail(req.params.email)
         // Se o usuario não for encontrado, devolve um erro
         if(!usuario){
             res.status(404).send('Usuário não encontrado')
@@ -47,7 +47,7 @@ class usuarioController {
 
     static async deletar(req, res){
         // Tenta deletar o usuario
-        const usuario = await usuarioDAO.deletar(req.params.email)
+        const usuario = await UsuarioDAO.deletar(req.params.email)
         // Se o usuario não for encontrado, devolve um erro
         if(usuario.erro){
             res.status(500).send('Erro ao deletar o usuário')
@@ -60,7 +60,7 @@ class usuarioController {
         // Preparar o usuario
         const usuario = new Usuario(req.body.nome, req.body.email, req.body.senha)
         // Tenta atualizar o usuario
-        const result = await usuarioDAO.atualizar(req.params.email, usuario)
+        const result = await UsuarioDAO.atualizar(req.params.email, usuario)
         // Se o usuario não for encontrado, devolve um erro
         if(result.erro){
             res.status(500).send('Erro ao atualizar o usuário')
